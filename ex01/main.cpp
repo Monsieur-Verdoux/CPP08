@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "Span.hpp"
-#include <ctime>
+#include <random>
 
 int main()
 {
@@ -24,8 +24,7 @@ int main()
 		sp.addNumber(22);
 
 		std::cout << "Elements in span: ";
-		std::cout << sp << std::endl; // This will call the overloaded operator<<
-
+		std::cout << sp << std::endl;
 		std::cout << "Shortest span: " << sp.shortestSpan() << std::endl;
 		std::cout << "Longest span: " << sp.longestSpan() << std::endl;
 
@@ -41,14 +40,16 @@ int main()
 
 	{
 		Span sp = Span(10000);
-		srand(time(0)); // Seed for random number generation
-		for (int i = 0; i < 10000; ++i)
-		{
-			sp.addNumber(rand() % 100000); // Add random numbers to the span
+		
+		std::random_device rd; // Random device to seed the random number generator, hardware entropy source
+		std::mt19937 gen(rd()); // Mersenne Twister random number generator seeded with the random device
+		std::uniform_int_distribution<> dist(0, 99999); // Uniform distribution between 0 and 99999
+
+		for (int i = 0; i < 10000; ++i) {
+			sp.addNumber(dist(gen)); // Generate a random number and add it to the span
 		}
 		std::cout << "Shortest span: " << sp.shortestSpan() << std::endl;
 		std::cout << "Longest span: " << sp.longestSpan() << std::endl;
-		std::cout << "Elements in span: ";
 	}
 
 	return 0;

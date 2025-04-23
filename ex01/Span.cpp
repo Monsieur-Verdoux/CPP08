@@ -12,14 +12,28 @@
 
 #include "Span.hpp"
 
-Span::Span(unsigned int N) : _size(N), _max(0), _min(0)
+Span::Span() : _size(0)
+{
+	std::cout << "Span default constructor called" << std::endl;
+}
+
+Span::Span(unsigned int N) : _size(N)
 {
 	std::cout << "Span constructor called" << std::endl;
 }
 
-Span::Span(const Span &original) : _set(original._set), _size(original._size), _max(original._max), _min(original._min)
+Span::Span(const Span &original) : _set(original._set), _size(original._size)
 {
 	std::cout << "Span copy constructor called" << std::endl;
+}
+
+Span& Span::operator=(const Span &original)
+{
+	if (this != &original) {
+		_set = original._set;
+		_size = original._size;
+	}
+	return *this;
 }
 
 Span::~Span()
@@ -32,18 +46,6 @@ void Span::addNumber(int num)
 	if (_set.size() >= _size)
 		throw std::runtime_error("Span is full");
 	_set.insert(num);
-	if (_set.size() == 1)
-	{
-		_max = num;
-		_min = num;
-	}
-	else
-	{
-		if (num > _max)
-			_max = num;
-		if (num < _min)
-			_min = num;
-	}
 }
 
 
@@ -59,9 +61,10 @@ int Span::shortestSpan() const
 	if (_set.size() < 2)
 		throw std::runtime_error("Not enough elements to find shortest span");
 	int minSpan = *_set.rbegin() - *_set.begin();
-	for (auto it = _set.begin(); it != --_set.end(); ++it) // --_set.end() is used to get the last element of the set
+	auto prevIt = _set.begin();
+	for (auto it = std::next(_set.begin()); it != _set.end(); ++it, ++prevIt)
 	{
-		int span = *(std::next(it)) - *it;
+		int span = *it - *prevIt;
 		if (span < minSpan)
 			minSpan = span;
 	}
@@ -73,23 +76,20 @@ unsigned int Span::getSize() const
 	return _size;
 }
 
-int Span::findByIndex(unsigned int index) const
+const std::multiset<int>& Span::getSet() const 
 {
-	if (index >= this->getSize())
-		throw std::out_of_range("Index out of range");
-	auto it = _set.begin();
-	std::advance(it, index); // advance the iterator to the index position
-	return *it;
+	return _set;
 }
 
 std::ostream& operator<<(std::ostream &out, const Span &span)
 {
 	out << "Span: ";
-	for (size_t i = 0; i < span.getSize(); i++)
+	size_t i = 0;
+	for (const auto& val : span.getSet())
 	{
-		if (i != 0)
+		if (i++ > 0)
 			out << ", ";
-		out << span.findByIndex(i);
+		out << val;
 	}
 	return out;
 }
