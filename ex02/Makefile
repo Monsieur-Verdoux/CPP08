@@ -10,9 +10,9 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME := ex01
+NAME := ex02
 CFLAGS := -Wall -Wextra -Werror
-SRC := main.cpp Span.cpp 
+SRC := main.cpp
 OBJ := $(SRC:.cpp=.o)
 
 all: $(NAME)
