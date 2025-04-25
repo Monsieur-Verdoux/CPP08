@@ -33,6 +33,16 @@ class Span
 		int longestSpan() const;
 		unsigned int getSize() const;
 		const std::multiset<int>& getSet() const;
+		template <typename iteratorType>
+		void addNumbers(iteratorType begin, iteratorType end);
 };
 
 std::ostream& operator<<(std::ostream &out, const Span &span);
+
+template <typename iteratorType>
+void Span::addNumbers(iteratorType begin, iteratorType end)
+{
+	if (std::distance(begin, end) + _set.size() > _size)
+		throw std::runtime_error("Not enough space in span to add numbers");
+	_set.insert(begin, end); // insert the range of numbers into the multiset
+}

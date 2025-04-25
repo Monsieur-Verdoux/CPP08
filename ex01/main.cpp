@@ -45,9 +45,13 @@ int main()
 		std::mt19937 gen(rd()); // Mersenne Twister random number generator seeded with the random device
 		std::uniform_int_distribution<> dist(0, 99999); // Uniform distribution between 0 and 99999
 
-		for (int i = 0; i < 10000; ++i) {
-			sp.addNumber(dist(gen)); // Generate a random number and add it to the span
+		std::vector<int> randomNumbers;
+		randomNumbers.reserve(10000); // Reserve space for 10000 elements
+		for (int i = 0; i < 10000; ++i)
+		{
+			randomNumbers.push_back(dist(gen)); // Generate random numbers and add them to the vector
 		}
+		sp.addNumbers(randomNumbers.begin(), randomNumbers.end()); // Add the random numbers to the span
 		std::cout << "Shortest span: " << sp.shortestSpan() << std::endl;
 		std::cout << "Longest span: " << sp.longestSpan() << std::endl;
 	}
