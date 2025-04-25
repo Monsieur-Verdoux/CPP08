@@ -104,7 +104,43 @@ int main()
 			mstack2.pop();
 		}
 		std::cout << "MutantStack size should be 0: " << mstack2.size() << std::endl;	
+		std::cout << "Trying to access the top element of an empty stack: " << std::endl;
+		try
+		{
+			if (mstack2.empty())
+				throw std::runtime_error("Empty stack exception");
+			std::cout << "Top element: " << mstack2.top() << std::endl;
+		}
+		catch (const std::exception &e)
+		{
+			std::cerr << "Error: " << e.what() << std::endl;
+		}
+		std::cout << "Trying iterating with one element in the stack: " << std::endl;
+		mstack2.push(42);
+		for (MutantStack<int>::iterator it = mstack2.begin(); it != mstack2.end(); ++it)
+			std::cout << *it << " ";
+		std::cout << std::endl;
+		std::cout << "Trying iterating with one element in the stack in reverse order: " << std::endl;
+		for (MutantStack<int>::reverse_iterator it = mstack2.rbegin(); it != mstack2.rend(); ++it)
+			std::cout << *it << " ";
+		std::cout << std::endl;
+		mstack2.push(69);
+		mstack2.push(72);
+		std::cout << "Testing copy constructor: " << std::endl;
+		MutantStack<int> mstack3(mstack2); // Copy constructor
+		std::cout << "MutantStack3 size should be 3: " << mstack3.size() << std::endl;
+		std::cout << "MutantStack3 elements: " << std::endl;
+		for (MutantStack<int>::iterator it = mstack3.begin(); it != mstack3.end(); ++it)
+			std::cout << *it << " ";
+		std::cout << std::endl;
+		std::cout << "Testing assignment operator: " << std::endl;
+		MutantStack<int> mstack4;
+		mstack4 = mstack3; // Assignment operator
+		std::cout << "MutantStack4 size should be 3: " << mstack4.size() << std::endl;
+		std::cout << "MutantStack4 elements: " << std::endl;
+		for (MutantStack<int>::iterator it = mstack4.begin(); it != mstack4.end(); ++it)
+			std::cout << *it << " ";
+		std::cout << std::endl;
 	}
 	return 0;
-
 }
