@@ -13,29 +13,6 @@
 #include "MutantStack.hpp"
 #include <list>
 
-// int main()
-// {
-// 	MutantStack<int> mutant;
-// 	mutant.push(343);
-// 	mutant.push(123);
-// 	mutant.push(456);
-
-// 	std::cout << "MutantStack elements: ";
-// 	for (MutantStack<int>::iterator it = mutant.begin(); it != mutant.end(); ++it)
-// 		std::cout << *it << " ";
-
-// 	std::cout << std::endl;
-
-// 	std::cout << "Top element: " <<  mutant.top(); // access the top element
-// 	mutant.pop(); // pop the last element
-// 	std::cout << std::endl;
-// 	std::cout << "After pop: ";
-
-// 	for (MutantStack<int>::iterator it = mutant.begin(); it != mutant.end(); ++it)
-// 		std::cout << *it << " ";
-	
-// }
-
 int main()
 {
 	{
